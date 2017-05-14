@@ -1,0 +1,37 @@
+{
+  "name": "run-script-os",
+  "version": "0.1.0",
+  "description": "run-script-os is a tool that will let you use generic run scripts that will pass through to os specific run scripts.",
+  "main": "index.js",
+  "scripts": {
+    "example": "echo '0. Call either npm test, npm run test, or npm run-script test and check out the output to see how pre/post scripts work with run-script-os'",
+
+    "pretest": "echo '1. Pretest (Generic) called first when running npm test'",
+    "test": "echo '2. Test (Generic) runs transitioning to OS specific code' && run-script-os",
+
+    "pretest:win32": "echo '3. Pretest (Windows 32/64)'",
+    "test:win32": "echo '4. Test (Windows 32/64)'",
+    "posttest:win32": "echo '5. Posttest (Windows 32/64)'",
+
+
+    "pretest:linux": "echo '3. Pretest (Linux)'",
+    "test:linux": "echo '4. Test (Linux)'",
+    "posttest:linux": "echo '5. Posttest (Linux)'",
+
+    "pretest:darwin": "echo '3. Pretest (MacOS)'",
+    "test:darwin": "echo '4. Test (MacOS)'",
+    "posttest:darwin": "echo '5. Posttest (MacOS)'",
+    
+    "posttest": "echo '6. Posttest (Generic) is finally called after all of the OS specific commands are called'"
+  },
+  "author": "Charlie Guse (https://github.com/charlesguse/run-script-os)",
+  "license": "MIT",
+  "bin": {
+    "run-script-os": "./index.js",
+    "run-os": "./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/charlesguse/run-script-os.git"
+  }
+}
