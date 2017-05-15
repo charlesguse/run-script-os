@@ -10,13 +10,12 @@ If you have experienced the pain of trying to make npm scripts usable across dif
 
 ## Usage
 
-Set `run-script-os` as the value of the npm script that you want different functionality per OS. In the example below, we set `test`.
+Set `run-script-os` (or `run-os`) as the value of the npm script field that you want different functionality per OS. In the example below, we set `test`, but it can be any npm script. It also uses `pre` and `post` commands (explained more below).
 
 Then create OS specific scripts. In the example below, you can see:
 
 * `test:win32`
-* `test:linux`
-* `test:darwin`
+* `test:linux:darwin`
 
 Those can have OS specific logic.
 
@@ -28,8 +27,7 @@ Those can have OS specific logic.
     ...
     "test": "run-script-os",
     "test:win32": "echo 'del whatever you want in Windows 32/64'", 
-    "test:linux": "echo 'rm until you cant rm anymore in Linux!'",
-    "test:darwin": "echo 'you get the idea (for macOS)'",
+    "test:darwin:linux": "echo 'You can combine OS tags and rm all the things!'",
     ...
   },
   ...
@@ -42,23 +40,17 @@ Those can have OS specific logic.
 del whatever you want in Windows 32/64
 ```
 
-**Linux Output:**
+**macOS and Linux Output:**
 ```
 > npm test
-rm until you cant rm anymore in Linux!
+You can combine OS tags and rm all the things!
 ```
 
-**macOS Output:**
-```
-> npm test
-you get the idea (for macOS)
-```
+### NPM Scripts Order
+When you call a script like `npm test`, npm will first call `pretest` if it exists. It will then call `test`, which, if you are using `run-script-os`, it will then call `npm run test:YOUR OS`, which in turn will call `pretest:YOUR OS` before actually running `test:YOUR OS`. Then `posttest:YOUR OS` will run, and then after that `posttest` will finally execute.
 
-  
-
-
-There is a more complex example showing pre/post hooks found in the [`package.json` of this repository](https://github.com/charlesguse/run-script-os/blob/master/package.json).
+There is an example showing `pre` and `post` commands found in the [`package.json` of this repository](https://github.com/charlesguse/run-script-os/blob/master/package.json).
 
 OS Options: `darwin`, `freebsd`, `linux`, `sunos`, `win32`
 
-Note: This list is gotten from [Node's `process.platform`](https://nodejs.org/api/process.html#process_process_platform) and is equivalent to [Node's `os.platform()`](https://nodejs.org/api/os.html#os_os_platform)
+More information can be found in [Node's `process.platform`](https://nodejs.org/api/process.html#process_process_platform) and [Node's `os.platform()`](https://nodejs.org/api/os.html#os_os_platform).
