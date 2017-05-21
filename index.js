@@ -27,9 +27,7 @@ options[1] = osCommand;
 
 let platformSpecific;
 if (process.platform === "win32") {
-    platformSpecific = spawn("npm.cmd", options);
+    platformSpecific = spawn("npm.cmd", options, { shell: true, stdio: "inherit"});
 } else {
-    platformSpecific = spawn("npm", options);
+    platformSpecific = spawn("npm", options, { shell: true, stdio: "inherit" });
 }
-platformSpecific.stdout.on('data', data => console.log(`${data}`));
-platformSpecific.stderr.on('data', data => console.log(`${data}`));
