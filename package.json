@@ -1,5 +1,5 @@
 {
-  "name": "run-script-os",
+  "name": "run-script-os-fix",
   "version": "1.0.2",
   "description": "run-script-os is a tool that will let you use generic npm script commands that will pass through to os specific commands.",
   "main": "index.js",
@@ -27,6 +27,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/charlesguse/run-script-os.git"
+    "url": "https://github.com/surfncode/run-script-os.git"
   }
 }
