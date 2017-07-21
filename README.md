@@ -2,11 +2,14 @@
 
 You will be able to use OS specific operations in npm scripts.
 
+##Note from surfncode
+This is a fork from https://github.com/charlesguse/run-script-os. It fixes the issue "Published index.js file has CRLF line endings, breaks Linux" (https://github.com/charlesguse/run-script-os/issues/1)
+
 ## Who would want this?
 If you have experienced the pain of trying to make npm scripts usable across different operating system, this package is for you! Looking at you `rm` and `del`!
 
 ## Installation
-`npm install --save-dev run-script-os`
+`npm install --save-dev run-script-os-fix`
 
 ## Usage
 
