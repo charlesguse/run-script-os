@@ -38,3 +38,7 @@ if (process.platform === "win32") {
 } else {
     platformSpecific = spawn("npm", options, { shell: true, stdio: "inherit" });
 }
+
+platformSpecific.on("exit", (code) => {
+    process.exit(code);
+});
