@@ -9,7 +9,13 @@ if (!process.env["npm_config_argv"]) {
 const spawn = require("child_process").spawn;
 
 let scripts;
-if (process.platform === "win32") {
+
+// Switch to linux platform if cygwin/gitbash detected
+let shell = process.env.SHELL || process.env.TERM
+shell = shell.match('bash.exe') ? 'bash.exe' : shell
+const platform = shell && ['bash.exe', 'cygwin'].includes(shell) ? 'linux' : process.platform
+
+if (platform === "win32") {
     scripts = require("./package.json").scripts;
 } else {
     scripts = require(path.join(process.env.PWD, "package.json")).scripts;
@@ -20,9 +26,9 @@ let options = npmArgs.original;
 if (!(options[0] === "run" || options[0] === "run-script")) {
     options.unshift("run");
 }
-let osCommand = `${options[1]}:${process.platform}`
+let osCommand = `${options[1]}:${platform}`
 if (!(osCommand in scripts)) {
-    let regex = new RegExp(`^(${options[1]}):([a-zA-Z0-9-]*:)*(${process.platform})(:[a-zA-Z0-9-]*)*$`, "g")
+    let regex = new RegExp(`^(${options[1]}):([a-zA-Z0-9-]*:)*(${platform})(:[a-zA-Z0-9-]*)*$`, "g")
     for (let command in scripts) {
         if (command.match(regex)) {
             osCommand = command;
@@ -33,7 +39,7 @@ if (!(osCommand in scripts)) {
 options[1] = osCommand;
 
 let platformSpecific;
-if (process.platform === "win32") {
+if (platform === "win32") {
     platformSpecific = spawn("npm.cmd", options, { shell: true, stdio: "inherit"});
 } else {
     platformSpecific = spawn("npm", options, { shell: true, stdio: "inherit" });
