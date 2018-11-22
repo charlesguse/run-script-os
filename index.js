@@ -12,7 +12,7 @@ let scripts;
 
 // Switch to linux platform if cygwin/gitbash detected
 let shell = process.env.SHELL || process.env.TERM
-shell = shell.match('bash.exe') ? 'bash.exe' : shell
+shell = shell && shell.match('bash.exe') ? 'bash.exe' : shell
 const platform = shell && ['bash.exe', 'cygwin'].includes(shell) ? 'linux' : process.platform
 
 if (platform === "win32") {
