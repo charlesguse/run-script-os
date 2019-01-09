@@ -26,6 +26,12 @@ let options = npmArgs.original;
 if (!(options[0] === "run" || options[0] === "run-script")) {
     options.unshift("run");
 }
+
+if (process.env.npm_lifecycle_event && process.env.npm_lifecycle_event != "") {
+  // this gives correctly post/pre-events -- at least on win10 original method shows just the base lifecycle
+  options[1]=process.env.npm_lifecycle_event;
+}
+
 let osCommand = `${options[1]}:${platform}`
 if (!(osCommand in scripts)) {
     let regex = new RegExp(`^(${options[1]}):([a-zA-Z0-9-]*:)*(${platform})(:[a-zA-Z0-9-]*)*$`, "g")
