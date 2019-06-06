@@ -11,7 +11,7 @@ const spawn = require("child_process").spawn;
 let scripts;
 
 // Switch to linux platform if cygwin/gitbash detected (fixes #7)
-// Allow overriding this behavior (fixes #8)
+// Allow overriding this behavior (fixes #11)
 let platform = process.platform
 if (process.env.RUN_OS_WINBASH) {
   let shell = process.env.SHELL || process.env.TERM
