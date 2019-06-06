@@ -46,6 +46,16 @@ del whatever you want in Windows 32/64
 You can combine OS tags and rm all the things!
 ```
 
+### Override detection settings for linux-based shells on Windows
+
+By default, run-script-os will detect cygwin/git bash as Linux. If you would rather your platform be detected as Windows under these environments:
+
+Set environment variable:
+
+```
+RUN_OS_WINBASH=true
+```
+
 ### NPM Scripts Order
 When you call a script like `npm test`, npm will first call `pretest` if it exists. It will then call `test`, which, if you are using `run-script-os`, it will then call `npm run test:YOUR OS`, which in turn will call `pretest:YOUR OS` before actually running `test:YOUR OS`. Then `posttest:YOUR OS` will run, and then after that `posttest` will finally execute.
 

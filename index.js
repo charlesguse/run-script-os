@@ -10,10 +10,14 @@ const spawn = require("child_process").spawn;
 
 let scripts;
 
-// Switch to linux platform if cygwin/gitbash detected
-let shell = process.env.SHELL || process.env.TERM
-shell = shell && shell.match("bash.exe") ? "bash.exe" : shell
-const platform = shell && ["bash.exe", "cygwin"].includes(shell) ? "linux" : process.platform
+// Switch to linux platform if cygwin/gitbash detected (fixes #7)
+// Allow overriding this behavior (fixes #8)
+let platform = process.platform
+if (!process.env.RUN_OS_WINBASH) {
+  let shell = process.env.SHELL || process.env.TERM
+  shell = shell && shell.match("bash.exe") ? "bash.exe" : shell
+  platform = shell && ["bash.exe", "cygwin"].includes(shell) ? "linux" : process.platform
+}
 
 if (platform === "win32") {
     scripts = require("./package.json").scripts;
