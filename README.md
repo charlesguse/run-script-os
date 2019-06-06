@@ -53,7 +53,7 @@ By default, run-script-os will detect cygwin/git bash as Windows. If you would r
 Set environment variable:
 
 ```
-RUN_OS_WINBASH=true
+RUN_OS_WINBASH_IS_LINUX=true
 ```
 
 ### NPM Scripts Order

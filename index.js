@@ -13,7 +13,7 @@ let scripts;
 // Switch to linux platform if cygwin/gitbash detected (fixes #7)
 // Allow overriding this behavior (fixes #11)
 let platform = process.platform
-if (process.env.RUN_OS_WINBASH) {
+if (process.env.RUN_OS_WINBASH_IS_LINUX) {
   let shell = process.env.SHELL || process.env.TERM
   shell = shell && shell.match("bash.exe") ? "bash.exe" : shell
   platform = shell && ["bash.exe", "cygwin"].includes(shell) ? "linux" : process.platform
