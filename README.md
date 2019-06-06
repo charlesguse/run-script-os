@@ -48,7 +48,7 @@ You can combine OS tags and rm all the things!
 
 ### Override detection settings for linux-based shells on Windows
 
-By default, run-script-os will detect cygwin/git bash as Linux. If you would rather your platform be detected as Windows under these environments:
+By default, run-script-os will detect cygwin/git bash as Windows. If you would rather your platform be detected as Linux under these environments:
 
 Set environment variable:
 
