@@ -32,6 +32,9 @@ if (!(options[0] === "run" || options[0] === "run-script")) {
     options.unshift("run");
 }
 
+// Check for yarn without install command; fixes #13
+if (process.env.npm_config_user_agent.includes('yarn') && !options[1]) options[1] = 'install';
+
 let osCommand = `${options[1]}:${platform}`
 if (!(osCommand in scripts)) {
     let regex = new RegExp(`^(${options[1]}):([a-zA-Z0-9-]*:)*(${platform})(:[a-zA-Z0-9-]*)*$`, "g");
