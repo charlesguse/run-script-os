@@ -6,17 +6,18 @@ if (!process.env["npm_config_argv"]) {
     console.log("This is meant to be run from within npm script. See https://github.com/charlesguse/run-script-os");
     return;
 }
+
 const spawn = require("child_process").spawn;
 
 let scripts;
 
 // Switch to linux platform if cygwin/gitbash detected (fixes #7)
 // Allow overriding this behavior (fixes #11)
-let platform = process.platform
+let platform = process.platform;
 if (process.env.RUN_OS_WINBASH_IS_LINUX) {
-  let shell = process.env.SHELL || process.env.TERM
-  shell = shell && shell.match("bash.exe") ? "bash.exe" : shell
-  platform = shell && ["bash.exe", "cygwin"].includes(shell) ? "linux" : process.platform
+  let shell = process.env.SHELL || process.env.TERM;
+  shell = shell && shell.match("bash.exe") ? "bash.exe" : shell;
+  platform = shell && ["bash.exe", "cygwin"].includes(shell) ? "linux" : process.platform;
 }
 
 if (platform === "win32") {
@@ -30,9 +31,10 @@ let options = npmArgs.original;
 if (!(options[0] === "run" || options[0] === "run-script")) {
     options.unshift("run");
 }
+
 let osCommand = `${options[1]}:${platform}`
 if (!(osCommand in scripts)) {
-    let regex = new RegExp(`^(${options[1]}):([a-zA-Z0-9-]*:)*(${platform})(:[a-zA-Z0-9-]*)*$`, "g")
+    let regex = new RegExp(`^(${options[1]}):([a-zA-Z0-9-]*:)*(${platform})(:[a-zA-Z0-9-]*)*$`, "g");
     for (let command in scripts) {
         if (command.match(regex)) {
             osCommand = command;
@@ -40,6 +42,7 @@ if (!(osCommand in scripts)) {
         }
     }
 }
+
 options[1] = osCommand;
 
 let platformSpecific;
