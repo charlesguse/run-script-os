@@ -16,6 +16,7 @@ Then create OS specific scripts. In the example below, you can see:
 
 * `test:win32`
 * `test:linux:darwin`
+* `test:default`
 
 Those can have OS specific logic.
 
@@ -26,8 +27,9 @@ Those can have OS specific logic.
   "scripts": {
     ...
     "test": "run-script-os",
-    "test:win32": "echo 'del whatever you want in Windows 32/64'", 
+    "test:win32": "echo 'del whatever you want in Windows 32/64'",
     "test:darwin:linux": "echo 'You can combine OS tags and rm all the things!'",
+    "test:default": "echo 'This will run on any platform that does not have its own script'"
     ...
   },
   ...
@@ -45,6 +47,15 @@ del whatever you want in Windows 32/64
 > npm test
 You can combine OS tags and rm all the things!
 ```
+
+### Aliases
+
+You can use the following aliases:
+
+* `:windows` - Alias for win32
+* `:macos` - Alias for darwin
+* `:nix` - This will run on anything considered to be a *nix OS (aix, darwin, freebsd, linux, openbsd, sunos, android)
+* `:default` - This will run if no platform-specific scripts are found
 
 ### Override detection settings for linux-based shells on Windows
 
