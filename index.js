@@ -18,7 +18,7 @@ if (process.env.RUN_OS_WINBASH_IS_LINUX) {
   platform = shell && ["bash.exe", "cygwin"].includes(shell) ? "linux" : process.platform;
 }
 
-const scripts = require(path.join(process.env.PWD, "package.json")).scripts;
+const scripts = require(path.join(process.cwd(), "package.json")).scripts;
 
 let npmArgs = JSON.parse(process.env["npm_config_argv"]);
 let options = npmArgs.original;
