@@ -1,3 +1,7 @@
+# Why does this fork exists?
+This fork was made to fix #20 in the original repo. Please check in there if you want to have a well supported version.
+There's also a couple of changes that were implemented to improve the readibility and allow for easier fixes in the future, I sure hope @charlesguse don't mind too much!
+
 # run-script-os
 
 You will be able to use OS specific operations in npm scripts.
