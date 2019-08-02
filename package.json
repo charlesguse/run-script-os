@@ -1,6 +1,6 @@
 {
   "name": "run-script-os",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "run-script-os is a tool that will let you use generic npm script commands that will pass through to os specific commands.",
   "main": "index.js",
   "scripts": {
