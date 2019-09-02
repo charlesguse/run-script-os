@@ -19,34 +19,46 @@
   }
 
   /**
+   * Save the result so we can determine if there was a match
+   */
+  let result;
+
+  /**
    * Alias match, allows for a more verbose description of the platform
    * it also helps to group similar platforms on a single execution
    */
   switch (platform) {
-    case 'win32': return (`${script}:windows` in scripts) ? `${script}:windows` : false;
+    case 'win32': result = (`${script}:windows` in scripts) ? `${script}:windows` : false;
 
     case 'aix':
     case 'linux':
     case 'sunos':
     case 'openbsd':
     case 'freebsd':
-    case 'android': return (`${script}:nix` in scripts) ? `${script}:nix` : false;
+    case 'android': result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
 
     case 'darwin':
-    /**
-     * macOS specific scripts (e.g. brew)
-     */
-    if (script === 'darwin')
-      return (`${script}:darwin` in scripts) ? `${script}:darwin` : false;
+      /**
+       * macOS specific scripts (e.g. brew)
+       */
+      if (script === 'darwin')
+        result = (`${script}:darwin` in scripts) ? `${script}:darwin` : false;
 
-    /**
-     * nix compatible scripts (cp, rm...)
-     */
-    else if (script === 'nix')
-      return (`${script}:nix`    in scripts) ? `${script}:nix`    : false;
+      /**
+       * nix compatible scripts (cp, rm...)
+       */
+      else if (script === 'nix')
+        result = (`${script}:nix`    in scripts) ? `${script}:nix`    : false;
 
       break;
 
-      default: return false;
+    default: return false;
+  }
+
+  /**
+   * Test if no script could be matched and try to return the default
+   */
+  if (!result) {
+    return (`${script}:default` in scripts) ? `${script}:default` : false;
   }
 }
