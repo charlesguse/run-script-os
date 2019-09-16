@@ -54,31 +54,17 @@ if (process.env.npm_config_user_agent.includes('yarn') && !argument) {
 }
 
 /**
- * Prepare command structure to test the available scripts defined in "scripts: { ... }"
- */
-let osCommand = `${options[1]}:${platform}`;
-
-/**
- * Basic match upon the property name
- * determine wether the name of the script exists in the list of defined scripts
- */
-let foundMatch = osCommand in scripts;
-
-if (!foundMatch) {
-  /**
    * More in-depth match
    * Execute the regular expression to help identify missing scripts
    * It also tests for different aliases
-   */
-  osCommand = matchScript(argument, platform, scripts) || matchScript(event, platform, scripts);
-  foundMatch = !!osCommand;
-}
+ */
+let osCommand = matchScript(event || argument, platform, scripts);
 
 /**
  * Test again, this time to end the process gracefully
  */
-if (!foundMatch) {
-  console.log(`run-script-os was unable to execute the script '${osCommand}'`);
+if (!osCommand) {
+  console.log(`run-script-os was unable to execute the script '${event || argument}'`);
   process.exit(0);
 }
 
@@ -93,6 +79,15 @@ if (!(options[0] === "run" || options[0] === "run-script")) {
  * Lastly, set the script to be executed
  */
 options[1] = osCommand;
+
+/**
+ * Check if we should be passing the original arguments to the new script
+ * Fix for #23
+ */
+const args = process.argv.slice(2).map((a) => a.toLowerCase());
+if(args.includes('--no-arguments')){
+  options = options.slice(0,2);
+}
 
 /**
  * Spawn new process to run the required script

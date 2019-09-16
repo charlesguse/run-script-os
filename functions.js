@@ -9,6 +9,15 @@
   */
  exports.matchScript = function matchScript(script, platform, scripts) {
   /**
+   * Save the result so we can determine if there was a match
+   * First check for a basic match before we have to go through each script with a regex
+   */
+  let result = (`${script}:${platform}` in scripts) ? `${script}:${platform}` : false;
+  if(result){
+    return result;
+  }
+  
+  /**
    * Regular expresion match
    * it helps when the "in" operator can't determine if there's a real match or not,
    * due to the properties changing
@@ -17,11 +26,6 @@
   for (let command in scripts) {
     if (command.match(regex)) return command;
   }
-
-  /**
-   * Save the result so we can determine if there was a match
-   */
-  let result;
 
   /**
    * Alias match, allows for a more verbose description of the platform
@@ -41,14 +45,14 @@
       /**
        * macOS specific scripts (e.g. brew)
        */
-      if (script === 'darwin')
-        result = (`${script}:darwin` in scripts) ? `${script}:darwin` : false;
+      result = (`${script}:darwin` in scripts) ? `${script}:darwin` : false;
 
       /**
        * nix compatible scripts (cp, rm...)
        */
-      else if (script === 'nix')
-        result = (`${script}:nix`    in scripts) ? `${script}:nix`    : false;
+      if(!result) {
+        result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
+	  }
 
       break;
 
@@ -58,7 +62,5 @@
   /**
    * Test if no script could be matched and try to return the default
    */
-  if (!result) {
-    return (`${script}:default` in scripts) ? `${script}:default` : false;
-  }
-}
+  return result ? result : (`${script}:default` in scripts);
+};
