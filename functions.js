@@ -32,15 +32,17 @@
    * it also helps to group similar platforms on a single execution
    */
   switch (platform) {
-    case 'win32': result = (`${script}:windows` in scripts) ? `${script}:windows` : false;
-
+    case 'win32':
+        result = (`${script}:windows` in scripts) ? `${script}:windows` : false;
+        break;
     case 'aix':
     case 'linux':
     case 'sunos':
     case 'openbsd':
     case 'freebsd':
-    case 'android': result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
-
+    case 'android':
+        result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
+        break;
     case 'darwin':
       /**
        * macOS specific scripts (e.g. brew)
@@ -53,10 +55,8 @@
       if(!result) {
         result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
 	  }
-
       break;
-
-    default: return false;
+    default: result = false;
   }
 
   /**
