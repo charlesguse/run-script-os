@@ -62,5 +62,9 @@
   /**
    * Test if no script could be matched and try to return the default
    */
-  return result ? result : (`${script}:default` in scripts);
+  if(result){
+      return result;
+  }
+  
+  return (`${script}:default` in scripts) ? `${script}:default` : false;
 };
