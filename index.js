@@ -25,7 +25,7 @@ let options = npmArgs.original;
 if (!(options[0] === "run" || options[0] === "run-script")) {
   options.unshift("run");
 }
-// Expand the "test" shortcut of "t"
+// Expand the "test" shortcut of "t"|"tst"
 if (["t", "tst"].indexOf(options[1]) > 1){
   options[1] = "test"
 }
