@@ -13,10 +13,8 @@
    * First check for a basic match before we have to go through each script with a regex
    */
   let result = (`${script}:${platform}` in scripts) ? `${script}:${platform}` : false;
-  if(result){
-    return result;
-  }
-  
+  if (result) return result;
+
   /**
    * Regular expresion match
    * it helps when the "in" operator can't determine if there's a real match or not,
@@ -33,16 +31,18 @@
    */
   switch (platform) {
     case 'win32':
-        result = (`${script}:windows` in scripts) ? `${script}:windows` : false;
-        break;
+      result = (`${script}:windows` in scripts) ? `${script}:windows` : false;
+      break;
+
     case 'aix':
     case 'linux':
     case 'sunos':
     case 'openbsd':
     case 'freebsd':
     case 'android':
-        result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
-        break;
+      result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
+      break;
+
     case 'darwin':
       /**
        * macOS specific scripts (e.g. brew)
@@ -52,19 +52,19 @@
       /**
        * nix compatible scripts (cp, rm...)
        */
-      if(!result) {
-        result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
-	  }
+      if (!result) result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
+
       break;
     default: result = false;
   }
 
   /**
-   * Test if no script could be matched and try to return the default
+   * Successful finding of a given script by platform, present it.
    */
-  if(result){
-      return result;
-  }
-  
+  if (result) return result;
+
+  /**
+   * Fall to default if it's given, otherwise fail
+   */
   return (`${script}:default` in scripts) ? `${script}:default` : false;
 };

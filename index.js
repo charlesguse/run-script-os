@@ -85,7 +85,7 @@ options[1] = osCommand;
  * Fix for #23
  */
 const args = process.argv.slice(2).map((a) => a.toLowerCase());
-if(args.includes('--no-arguments')){
+if (args.includes('--no-arguments')) {
   options = options.slice(0,2);
 }
 
