@@ -75,7 +75,7 @@ if (process.env.npm_config_user_agent.includes('yarn') && !argument) {
    * Execute the regular expression to help identify missing scripts
    * It also tests for different aliases
  */
-let osCommand = matchScript(event || argument, platform, scripts);
+osCommand = matchScript(event || argument, platform, scripts);
 
 /**
  * Test again, this time to end the process gracefully
