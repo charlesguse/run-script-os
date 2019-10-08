@@ -6,6 +6,7 @@ const path = require("path");
  * Functions defined to separate the alias and regex matching
  */
 const matchScript = require ('./functions.js').matchScript;
+const expandShorthand = require('./functions.js').expandShorthand;
 
 /**
  * This package can only be executed from within the npm script execution context
@@ -47,11 +48,9 @@ if (!(options[0] === "run" || options[0] === "run-script")) {
 }
 
 /**
- * Expand the "test" shortcut of "t"|"tst"
+ * Expand shorthand command descriptors
  */
-if (["t", "tst"].indexOf(options[1]) > -1){
-  options[1] = "test"
-}
+options[1] = expandShorthand(options[1]);
 
 // Check for yarn without install command; fixes #13
 if (process.env.npm_config_user_agent.includes('yarn') && !options[1]) options[1] = 'install';

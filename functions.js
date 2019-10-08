@@ -68,3 +68,28 @@
    */
   return (`${script}:default` in scripts) ? `${script}:default` : false;
 };
+
+/**
+ * Expand the shorthand description for npm commands
+ *
+ * i.e. npm i -> npm install
+ *
+ * @param  String shorthand   Shorthand command to be expanded
+ * @return String             Actual command
+ */
+exports.expandShorthand = function expandShorthand(shorthand) {
+  switch(shorthand) {
+    case 'i':
+      return 'install';
+
+    case 't':
+    case 'tst':
+      return 'test';
+
+    /**
+     * Expansion is not possible
+     * @type {[type]}
+     */
+    default: return shorthand;
+  }
+}
