@@ -19,6 +19,7 @@ if (process.env.RUN_OS_WINBASH_IS_LINUX) {
 }
 
 const scripts = require(path.join(process.cwd(), "package.json")).scripts;
+const currentScript = process.env.npm_lifecycle_event;
 
 let npmArgs = JSON.parse(process.env["npm_config_argv"]);
 let options = npmArgs.original;
@@ -68,7 +69,11 @@ if (!foundMatch && (`${options[1]}:default` in scripts)) {
   foundMatch = true;
 }
 
-options[1] = osCommand;
+if (!foundMatch && options[1] === currentScript) {
+  // Avoid to run loop on script when not found
+  process.exit(0);
+}
+options[1] = foundMatch ? osCommand : currentScript;
 
 let platformSpecific;
 if (platform === "win32") {
