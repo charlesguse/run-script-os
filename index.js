@@ -25,6 +25,10 @@ let options = npmArgs.original;
 if (!(options[0] === "run" || options[0] === "run-script")) {
   options.unshift("run");
 }
+// Expand the "test" shortcut of "t"|"tst"
+if (["t", "tst"].indexOf(options[1]) > -1){
+  options[1] = "test"
+}
 
 // Check for yarn without install command; fixes #13
 if (process.env.npm_config_user_agent.includes('yarn') && !options[1]) options[1] = 'install';
