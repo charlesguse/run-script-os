@@ -53,7 +53,8 @@ if (!(options[0] === "run" || options[0] === "run-script")) {
 options[1] = expandShorthand(options[1]);
 
 // Check for yarn without install command; fixes #13
-if (process.env.npm_config_user_agent.includes('yarn') && !options[1]) options[1] = 'install';
+const isYarn = process.env.npm_config_user_agent.includes('yarn');
+if (isYarn && !options[1]) options[1] = 'install';
 
 let osCommand = `${options[1]}:${platform}`;
 let foundMatch = true;
@@ -65,7 +66,7 @@ let event = process.env["npm_lifecycle_event"];
  * Yarn support
  * Check for yarn without install command; fixes #13
  */
-if (process.env.npm_config_user_agent.includes('yarn') && !argument) {
+if (isYarn && !argument) {
   argument = 'install';
 }
 
@@ -122,16 +123,18 @@ if (!args.includes('--no-arguments')) {
  *
  * Open either the cmd file or the cmd command, if we're in windows
  */
-let platformSpecific;
+let packageManagerCommand;
+
+packageManagerCommand = isYarn ? "yarn" : "npm";
 if (platform === "win32") {
-  platformSpecific = spawn("npm.cmd", options, { shell: true, stdio: "inherit"});
-} else {
-  platformSpecific = spawn("npm", options, { shell: true, stdio: "inherit" });
+  packageManagerCommand = packageManagerCommand + ".cmd";
 }
+
+const childProcess = spawn(packageManagerCommand, options, { shell: true, stdio: "inherit"});
 
 /**
  * Finish the execution
  */
-platformSpecific.on("exit", (code) => {
+childProcess.on("exit", (code) => {
   process.exit(code);
 });
