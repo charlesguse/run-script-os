@@ -96,13 +96,25 @@ if (!(options[0] === "run" || options[0] === "run-script")) {
  */
 options[1] = osCommand;
 
+
+const supportedArgs = ['--no-arguments'];
+let args = process.argv.slice(2).map((a) => a.toLowerCase());;
+let argsCount = 0;
+for (let i = 0; i < args.length; i += 1) {
+  if (supportedArgs.includes(args[i])) {
+    argsCount = i;
+  }
+}
+args = args.slice(0, argsCount);
+
 /**
+ * Append arguments passed to the run-script-os
  * Check if we should be passing the original arguments to the new script
  * Fix for #23
  */
-const args = process.argv.slice(2).map((a) => a.toLowerCase());
-if (args.includes('--no-arguments')) {
-  options = options.slice(0,2);
+options = options.slice(0,2);
+if (!args.includes('--no-arguments')) {
+  options = options.concat(process.argv.slice(2 + argsCount));
 }
 
 /**
