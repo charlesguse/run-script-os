@@ -1,0 +1,28 @@
+{
+    "name": "run-script-os-tests",
+    "description": "run-script-os is a tool that will let you use generic npm script commands that will pass through to os specific commands.",
+    "scripts": {
+        "pretest": "echo '1'",
+        "test": "echo '2' && run-script-os",
+
+        "pretest:windows": "echo '3.windows'",
+        "test:windows": "echo '4.windows'",
+        "posttest:windows": "echo '5.windows'",
+
+        "pretest:nix": "echo '3.nix",
+        "test:nix": "echo '4.nix'",
+        "posttest:nix": "echo '5.nix'",
+
+        "posttest": "echo '6'",
+        "test-error": "run-script-os",
+        "test-error:linux": "echo 'Run $? afterwards to confirm the error code is propagating appropriately.' && exit 11",
+        "test-error:win32": "echo 'Run $LASTEXITCODE (PowerShell) or %errorlevel% (CMD) afterwards to confirm the error code is propagating appropriately.' && exit 22",
+        "test-args": "run-script-os 'Hello,' 'run-script-os.'",
+        "test-args:default": "echo"
+    },
+    "author": "Charlie Guse (https://github.com/charlesguse/run-script-os)",
+    "license": "MIT",
+    "dependencies": {
+        "run-script-os": "file:.."
+    }
+}
