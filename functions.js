@@ -44,6 +44,7 @@
       break;
 
     case 'darwin':
+    case 'macos':
       /**
        * macOS specific scripts (e.g. brew)
        */
