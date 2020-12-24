@@ -28,7 +28,7 @@ jobs:
         run: npm install
       - name: Running tests in powershell for Windows
         if: ${{ runner.os == 'Windows'}}
-        run: Invoke-Pester -Path ./windows.test.ps1
+        run: windows.test.ps1
         shell: pwsh
       - name: Running tests in Linux
         if: ${{ runner.os == 'Linux' }}
