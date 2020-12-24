@@ -29,7 +29,7 @@ jobs:
       - name: Running tests in powershell for Windows
         if: ${{ runner.os == 'Windows'}}
         run: Invoke-Pester -Path ./windows.test.ps1
-        shell: powershell
+        shell: pwsh
       - name: Running tests in Linux
         if: ${{ runner.os == 'Linux' }}
         run: ./linux.test.sh
