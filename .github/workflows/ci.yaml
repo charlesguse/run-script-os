@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Testing run-script-os with Node.js ${{ matrix.node-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.
+      - name: Testing run-script-os with **Node.js ${{ matrix.node-version }}** on `${{ matrix.os }}` from a tests project similar to how run-script-os is used by others.
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
@@ -28,13 +28,13 @@ jobs:
         run: npm install
       - name: Running tests in powershell for Windows
         if: ${{ runner.os == 'Windows'}}
-        run: ./windows.test.ps1
+        run: Invoke-Pester -Path ./windows.test.ps1
         shell: powershell
       - name: Running tests in Linux
         if: ${{ runner.os == 'Linux' }}
         run: ./linux.test.sh
         shell: bash
-      - name: Running tests in bash for macOS or Linux
+      - name: Running tests in bash for macOS
         if: ${{ runner.os == 'macOS' }}
         run: ./macos.test.sh
         shell: bash
