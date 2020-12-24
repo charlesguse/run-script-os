@@ -8,8 +8,6 @@ jobs:
     defaults:
       run:
         working-directory: ./tests
-      env:
-          CI: true
     strategy:
       matrix:
         os:
