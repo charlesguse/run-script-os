@@ -9,20 +9,27 @@
         "test:windows": "echo '4.windows'",
         "posttest:windows": "echo '5.windows'",
 
-        "pretest:nix": "echo '3.nix",
-        "test:nix": "echo '4.nix'",
-        "posttest:nix": "echo '5.nix'",
+        "pretest:linux": "echo '3.linux'",
+        "test:linux": "echo '4.linux'",
+        "posttest:linux": "echo '5.linux'",
+
+        "pretest:darwin": "echo '3.mac'",
+        "test:darwin": "echo '4.mac'",
+        "posttest:darwin": "echo '5.mac'",
 
         "posttest": "echo '6'",
+
         "test-error": "run-script-os",
-        "test-error:linux": "echo 'Run $? afterwards to confirm the error code is propagating appropriately.' && exit 11",
-        "test-error:win32": "echo 'Run $LASTEXITCODE (PowerShell) or %errorlevel% (CMD) afterwards to confirm the error code is propagating appropriately.' && exit 22",
+        "test-error:nix": "exit 11",
+        "test-error:win32": "exit 22",
+        
         "test-args": "run-script-os 'Hello,' 'run-script-os.'",
         "test-args:default": "echo"
     },
     "author": "Charlie Guse (https://github.com/charlesguse/run-script-os)",
     "license": "MIT",
-    "dependencies": {
+    "devDependencies": {
+        "bats": "^1.2.1",
         "run-script-os": "file:.."
     }
 }

@@ -1,0 +1,42 @@
+name: run-script-os CI
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        working-directory: ./tests
+      env:
+          CI: true
+    strategy:
+      matrix:
+        os:
+          - macos-latest
+          - ubuntu-latest
+          - windows-latest
+        node-version:
+          - 12
+          - 14
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Testing run-script-os with Node.js ${{ matrix.node-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Installing node modules for the tests (working-directory is ./tests)
+        run: npm install
+      - name: Running tests in powershell for Windows
+        if: ${{ runner.os == 'Windows'}}
+        run: ./windows.test.ps1
+        shell: powershell
+      - name: Running tests in Linux
+        if: ${{ runner.os == 'Linux' }}
+        run: ./linux.test.sh
+        shell: bash
+      - name: Running tests in bash for macOS or Linux
+        if: ${{ runner.os == 'macOS' }}
+        run: ./macos.test.sh
+        shell: bash
