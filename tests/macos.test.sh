@@ -1,3 +1,3 @@
 #!/bin/bash
 
-NIX_OS=macos ./nix.test.sh
+NIX_OS=macos node_modules/.bin/bats ./nix.test.bats
