@@ -1,7 +1,7 @@
 #!node_modules/.bin/bats
 
 setup() {
-  date_time=$(date --universal +"%Y%m%d-%H%M%S")
+  date_time=$(date -u +"%Y%m%d-%H%M%S")
   # expected="20201224-210751"
   export expected="$NIX_OS.expected.txt"
   # expected="linux.expected.txt"
