@@ -5,7 +5,7 @@ Describe "run-script-os" -Tags "CI" {
         $actual = "windows.actual.$date_time.txt"
 
         $Global:LASTEXITCODE | Should -BeNull
-        npm run-script test --silent > $actual
+        npm run-script sample --silent > $actual
         $Global:LASTEXITCODE | Should -Be 0
 
         $diff = Compare-Object -ReferenceObject (Get-Content $expected) -DifferenceObject (Get-Content $actual)

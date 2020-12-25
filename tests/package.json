@@ -2,22 +2,27 @@
     "name": "run-script-os-tests",
     "description": "run-script-os is a tool that will let you use generic npm script commands that will pass through to os specific commands.",
     "scripts": {
-        "pretest": "echo '1'",
-        "test": "echo '2' && run-script-os",
+        "test": "run-script-os",
+        "test:windows": "Invoke-Pester ./windows.test.ps1 -PassThru | Select-Object -ExpandProperty FailedCount | Should -Be 0",
+        "test:linux": "./linux.test.sh",
+        "test:darwin": "./macos.test.sh",
 
-        "pretest:windows": "echo '3.windows'",
-        "test:windows": "echo '4.windows'",
-        "posttest:windows": "echo '5.windows'",
+        "presample": "echo '1'",
+        "sample": "echo '2' && run-script-os",
 
-        "pretest:linux": "echo '3.linux'",
-        "test:linux": "echo '4.linux'",
-        "posttest:linux": "echo '5.linux'",
+        "presample:windows": "echo '3.windows'",
+        "sample:windows": "echo '4.windows'",
+        "postsample:windows": "echo '5.windows'",
 
-        "pretest:darwin": "echo '3.mac'",
-        "test:darwin": "echo '4.mac'",
-        "posttest:darwin": "echo '5.mac'",
+        "presample:linux": "echo '3.linux'",
+        "sample:linux": "echo '4.linux'",
+        "postsample:linux": "echo '5.linux'",
 
-        "posttest": "echo '6'",
+        "presample:darwin": "echo '3.mac'",
+        "sample:darwin": "echo '4.mac'",
+        "postsample:darwin": "echo '5.mac'",
+
+        "postsample": "echo '6'",
 
         "test-error": "run-script-os",
         "test-error:nix": "exit 11",

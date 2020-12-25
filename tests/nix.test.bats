@@ -8,7 +8,7 @@
   actual="$NIX_OS.actual.$date_time.txt"
   # actual="linux.actual.20201224-210751.txt"
 
-  run $(npm run-script test --silent > $actual)
+  run $(npm run-script sample --silent > $actual)
   [ "$status" -eq 0 ]
   
   run diff --text $expected $actual
