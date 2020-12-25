@@ -7,7 +7,7 @@ Describe "run-script-os" -Tags "CI" {
         # actual = "windows.actual.20201224-210751.txt"
 
         npm run-script test --silent > $actual
-        $LASTEXITCODE | Should -Be 0
+        $Global:LASTEXITCODE | Should -Be 0
 
         $diff = Compare-Object -ReferenceObject (Get-Content $expected) -DifferenceObject (Get-Content $actual)
         $diffCount = $diff | Measure-Object | Select-Object -ExpandProperty Count
@@ -16,6 +16,7 @@ Describe "run-script-os" -Tags "CI" {
 
     It "should be able to error out as expected" {
         npm run-script test-error --silent
-        $LASTEXITCODE | Should -Be 22
+        $Global:LASTEXITCODE | Should -Be 22
+        $Global:LASTEXITCODE = 0
     }
 }
