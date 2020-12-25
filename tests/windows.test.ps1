@@ -4,7 +4,6 @@ Describe "run-script-os" -Tags "CI" {
         $expected = "windows.expected.txt"
         $actual = "windows.actual.$date_time.txt"
 
-        $Global:LASTEXITCODE | Should -BeNull
         npm run-script sample --silent > $actual
         $Global:LASTEXITCODE | Should -Be 0
 
@@ -14,7 +13,6 @@ Describe "run-script-os" -Tags "CI" {
     }
 
     It "should be able to error out as expected" {
-        $Global:LASTEXITCODE | Should -Be 0
         npm run-script test-error --silent
         $Global:LASTEXITCODE | Should -Be 22
         $Global:LASTEXITCODE = 0
