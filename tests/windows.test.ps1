@@ -4,7 +4,7 @@ Describe "run-script-os" -Tags "CI" {
         $expected = "windows.expected.txt"
         $actual = "windows.actual.$date_time.txt"
 
-        $Global:LASTEXITCODE | Should -Be 0
+        $Global:LASTEXITCODE | Should -BeNull
         npm run-script test --silent > $actual
         $Global:LASTEXITCODE | Should -Be 0
 
