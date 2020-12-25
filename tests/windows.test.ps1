@@ -14,6 +14,12 @@ Describe "run-script-os" -Tags "CI" {
 
     It "should be able to error out as expected" {
         npm run-script test-error --silent
+        $Global:LASTEXITCODE | Should -Be 22
+        $Global:LASTEXITCODE = 0
+    }
+
+    It "this test should fail" {
+        npm run-script test-error --silent
         $Global:LASTEXITCODE | Should -Be 23
         $Global:LASTEXITCODE = 0
     }
