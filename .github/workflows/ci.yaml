@@ -28,7 +28,7 @@ jobs:
         run: npm install
       - name: Running tests in powershell for Windows
         if: ${{ runner.os == 'Windows'}}
-        run: Invoke-Pester ./windows.test.ps1 -EnableExit; echo $LASTEXITCODE
+        run: Invoke-Pester ./windows.test.ps1 -PassThru
         shell: pwsh
       - name: Running tests in Linux
         if: ${{ runner.os == 'Linux' }}
