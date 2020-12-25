@@ -1,11 +1,10 @@
 Describe "run-script-os" -Tags "CI" {
     It "should run as expected with pre/post variables" {
         $date_time = Get-Date ([datetime]::UtcNow) -UFormat "%Y%m%d-%H%M%S"
-        # date_time = "20201224-210751"
         $expected = "windows.expected.txt"
         $actual = "windows.actual.$date_time.txt"
-        # actual = "windows.actual.20201224-210751.txt"
 
+        $Global:LASTEXITCODE | Should -Be 0
         npm run-script test --silent > $actual
         $Global:LASTEXITCODE | Should -Be 0
 
@@ -15,8 +14,9 @@ Describe "run-script-os" -Tags "CI" {
     }
 
     It "should be able to error out as expected" {
+        $Global:LASTEXITCODE | Should -Be 0
         npm run-script test-error --silent
-        $Global:LASTEXITCODE | Should -Be 21
+        $Global:LASTEXITCODE | Should -Be 22
         $Global:LASTEXITCODE = 0
     }
 }
