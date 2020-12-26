@@ -1,4 +1,4 @@
-name: run-script-os CI
+name: run-script-os CICD
 
 on: [push]
 
@@ -24,6 +24,23 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Installing node modules for the tests (working-directory is ./tests)
-        run: npm install
+        run: npm ci
       - name: Running tests
         run: npm test
+  deploy:
+    name: Publish to NPM
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    #timeout-minutes: 3
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Testing run-script-os with Node.js ${{ matrix.node-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.
+        uses: actions/setup-node@v2
+      - name: Check line endings
+        uses: file *
+      - name: NPM Publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
+          dry-run: true
