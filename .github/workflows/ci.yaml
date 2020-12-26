@@ -11,8 +11,8 @@ jobs:
     strategy:
       matrix:
         os:
-          #- macos-latest
-          #- ubuntu-latest
+          - macos-latest
+          - ubuntu-latest
           - windows-latest
         node-version:
           #- 12
@@ -26,19 +26,5 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Installing node modules for the tests (working-directory is ./tests)
         run: npm install
-      - name: Get Peser defaults
-        run: npm run get-pester-defaults
       - name: Running tests
         run: npm test
-      # - name: Running tests in powershell for Windows
-      #   if: ${{ runner.os == 'Windows'}}
-      #   run: Invoke-Pester ./windows.test.ps1 -PassThru | Select-Object -ExpandProperty FailedCount | Should -Be 0
-      #   shell: pwsh
-      # - name: Running tests in Linux
-      #   if: ${{ runner.os == 'Linux' }}
-      #   run: ./linux.test.sh
-      #   shell: bash
-      # - name: Running tests in bash for macOS
-      #   if: ${{ runner.os == 'macOS' }}
-      #   run: ./macos.test.sh
-      #   shell: bash
