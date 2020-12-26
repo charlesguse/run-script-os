@@ -5,7 +5,7 @@ generate_results_filename () {
   echo "$NIX_OS.actual.$date_time._.$uuid.txt"
 }
 
-
+# It = run-scripts-os
 @test "It should run as expected with pre/post variables" {
   local expected="$NIX_OS.expected.txt"
   local results=$(generate_results_filename)
@@ -26,6 +26,18 @@ generate_results_filename () {
   local expected="Hello, run-script-os."
 
   run npm run-script test-args --silent
+  [ "$status" -eq 0 ]
+  [ "$output" = "$expected" ]
+}
+
+@test "It should be able to use the darwin alias for MacOS" {
+  local expected="darwin"
+
+  if ["$NIX_OS" != "macos"]
+    expected="not darwin"
+  fi
+
+  run npm run-script test-darwin --silent
   [ "$status" -eq 0 ]
   [ "$output" = "$expected" ]
 }

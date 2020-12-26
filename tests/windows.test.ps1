@@ -31,4 +31,12 @@ Describe "run-script-os" {
         $output = npm run-script test-args --silent
         $output | Should -Be $expected
     }
+
+    It "should be able to use the darwin alias for MacOS" {
+        # This powershell test is only run against Windows currently.
+        $expected = "'not darwin'"
+
+        $output = npm run-script test-darwin --silent
+        $output | Should -Be $expected
+    }
 }
