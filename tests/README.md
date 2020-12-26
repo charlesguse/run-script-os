@@ -9,13 +9,13 @@ Tests are split up into two categories, Bash tests and PowerShell tests. The tes
 
 The Bash tests exist in `nix.test.bats` and that test file is called by `linux.test.sh` and `macos.test.sh`. The scripts set an environment variable (`NIX_OS`) to grab the proper test results (`linux/mac.expected.txt`). The environment variable `NIX_OS` DOES NOT override anything within npm-run-script itself and is only used within `nix.test.bats` for testing purposes.
 
-The PowerShell tests don't return a status code of the errors by default. This chain of PowerShell commands `Invoke-Pester -Configuration (Get-Content ./windows.configuration.json | ConvertFrom-Json) | Select-Object -ExpandProperty FailedCount | Should -Be 0"` will return a non-zero status code if there are failed tests.
+The PowerShell tests don't return a status code of the errors by default. This chain of PowerShell commands `Invoke-Pester -Configuration (Get-Content ./windows.configuration.json | ConvertFrom-Json) | Select-Object -ExpandProperty FailedCount | Should -BeNull"` will return a non-zero status code if there are failed tests.
 
 Broken down, `Invoke-Pester -Configuration (Get-Content ./windows.configuration.json | ConvertFrom-Json)`, Pester is pulling in a configuration file (`./windows.configuration.json`) to use to run the tests. `Invoke-Pester` returns a complex object that then needs to be queried for how many tests failed.
 
-That is handled in this next section. `| Select-Object -ExpandProperty FailedCount | Should -Be 0"` queries the object returned from Pester for the FailedCount of the tests and then the `Should` command will return a non-zero status code if `FailedCount` isn't 0.
+That is handled in this next section. `| Select-Object -ExpandProperty FailedCount | Should -BeNull"` queries the object returned from Pester for the FailedCount of the tests and then the `Should` command will return a non-zero status code if `FailedCount` isn't 0.
 
-Within the NPM scripts section, all of that is wrapped in `@powershell -NoProfile -Command \"Invoke-Pester ... | Should -Be 0\""`. This is so that NPM will run the command in PowerShell regardless of which shell it was actually invoked in (often times CMD on Windows).
+Within the NPM scripts section, all of that is wrapped in `@powershell -NoProfile -Command \"Invoke-Pester ... | Should -BeNull\""`. This is so that NPM will run the command in PowerShell regardless of which shell it was actually invoked in (often times CMD on Windows).
 
 ---
 
