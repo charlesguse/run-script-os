@@ -25,12 +25,6 @@ Describe "run-script-os" {
         $Global:LASTEXITCODE | Should -Be 22
     }
 
-
-    It "should fail" {
-        npm run-script test-error --silent
-        $Global:LASTEXITCODE | Should -Be 23
-    }
-
     It "should be able to be able to pass arguements along" {
         $expected = """'Hello,'"" ""'run-script-os.'"""
 
