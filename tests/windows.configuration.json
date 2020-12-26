@@ -1,0 +1,6 @@
+{
+    "Run": {
+        "Exit": true,
+        "Path": "./windows.test.ps1"
+    }
+}

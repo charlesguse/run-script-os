@@ -29,5 +29,12 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/charlesguse/run-script-os.git"
-  }
+  },
+  "files": [
+    "LICENSE",
+    "functions.js",
+    "index.js",
+    "package.json",
+    "README.md"
+  ]
 }

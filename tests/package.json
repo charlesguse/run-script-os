@@ -1,0 +1,42 @@
+{
+    "name": "run-script-os-tests",
+    "description": "run-script-os is a tool that will let you use generic npm script commands that will pass through to os specific commands.",
+    "scripts": {
+        "test": "run-script-os",
+        "test:windows": "@powershell -NoProfile -Command \"Invoke-Pester -Configuration (Get-Content ./windows.configuration.json | ConvertFrom-Json) | Select-Object -ExpandProperty FailedCount | Should -BeNull\"",
+        "test:linux": "./linux.test.sh",
+        "test:darwin": "./macos.test.sh",
+
+        "get-pester-defaults": "@powershell -NoProfile -Command \"Import-Module Pester; [PesterConfiguration]::Default\"",
+
+        "presample": "echo '1'",
+        "sample": "echo '2' && run-script-os",
+
+        "presample:windows": "echo '3.windows'",
+        "sample:windows": "echo '4.windows'",
+        "postsample:windows": "echo '5.windows'",
+
+        "presample:linux": "echo '3.linux'",
+        "sample:linux": "echo '4.linux'",
+        "postsample:linux": "echo '5.linux'",
+
+        "presample:darwin": "echo '3.mac'",
+        "sample:darwin": "echo '4.mac'",
+        "postsample:darwin": "echo '5.mac'",
+
+        "postsample": "echo '6'",
+
+        "test-error": "run-script-os",
+        "test-error:nix": "exit 11",
+        "test-error:win32": "exit 22",
+        
+        "test-args": "run-script-os 'Hello,' 'run-script-os.'",
+        "test-args:default": "echo"
+    },
+    "author": "Charlie Guse (https://github.com/charlesguse/run-script-os)",
+    "license": "MIT",
+    "devDependencies": {
+        "bats": "^1.2.1",
+        "run-script-os": "file:.."
+    }
+}
