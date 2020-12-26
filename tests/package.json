@@ -3,7 +3,7 @@
     "description": "run-script-os is a tool that will let you use generic npm script commands that will pass through to os specific commands.",
     "scripts": {
         "test": "run-script-os",
-        "test:windows": "@powershell -NoProfile -Command \"Invoke-Pester -Configuration (Get-Content ./windows.configuration.json | ConvertFrom-Json)\"",
+        "test:windows": "@powershell -NoProfile -Command \"Invoke-Pester -Configuration (Get-Content ./windows.configuration.json | ConvertFrom-Json) | Select-Object -ExpandProperty FailedCount | Should -Be 0\"",
         "test:linux": "./linux.test.sh",
         "test:darwin": "./macos.test.sh",
 
