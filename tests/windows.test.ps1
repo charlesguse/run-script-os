@@ -3,7 +3,7 @@ Describe "run-script-os" {
     BeforeAll {
         function Get-GenerateResultsFilename {
             $date_time = Get-Date ([datetime]::UtcNow) -UFormat "%Y%m%d-%H%M%S"
-            $guid = New-Guid
+            $guid = [guid]::newguid()
             "windows.actual.$date_time._.$guid.txt"
         }
     }
