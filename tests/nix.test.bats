@@ -19,8 +19,3 @@
   run npm run-script test-error --silent
   [ "$status" -eq 11 ]
 }
-
-@test "This test should fail" {
-  run npm run-script test-error --silent
-  [ "$status" -eq 12 ]
-}

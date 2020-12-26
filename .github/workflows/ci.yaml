@@ -11,13 +11,12 @@ jobs:
     strategy:
       matrix:
         os:
-          #- macos-latest
+          - macos-latest
           - ubuntu-latest
-          #- windows-latest
+          - windows-latest
         node-version:
-          #- 12
+          - 12
           - 14
-
     steps:
       - uses: actions/checkout@v2
       - name: Testing run-script-os with Node.js ${{ matrix.node-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.

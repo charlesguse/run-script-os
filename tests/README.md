@@ -13,7 +13,7 @@ The PowerShell tests don't return a status code of the errors by default. This c
 
 Broken down, `Invoke-Pester -Configuration (Get-Content ./windows.configuration.json | ConvertFrom-Json)`, Pester is pulling in a configuration file (`./windows.configuration.json`) to use to run the tests. `Invoke-Pester` returns a complex object that then needs to be queried for how many tests failed.
 
-That is handled in this next section. `| Select-Object -ExpandProperty FailedCount | Should -BeNull"` queries the object returned from Pester for the FailedCount of the tests and then the `Should` command will return a non-zero status code if `FailedCount` isn't 0.
+That is handled in this next section. `| Select-Object -ExpandProperty FailedCount | Should -BeNull"` queries the object returned from Pester for the FailedCount of the tests and then the `Should` command will return a non-zero status code if `FailedCount` is anything but null.
 
 Within the NPM scripts section, all of that is wrapped in `@powershell -NoProfile -Command \"Invoke-Pester ... | Should -BeNull\""`. This is so that NPM will run the command in PowerShell regardless of which shell it was actually invoked in (often times CMD on Windows).
 
