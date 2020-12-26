@@ -38,7 +38,7 @@ jobs:
       - name: Testing run-script-os with Node.js ${{ matrix.node-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.
         uses: actions/setup-node@v2
       - name: Check line endings
-        uses: file *
+        run: file *
       - name: NPM Publish
         uses: JS-DevTools/npm-publish@v1
         with:
