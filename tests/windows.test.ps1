@@ -23,7 +23,7 @@ Describe "run-script-os" {
     It "should be able to error out as expected" {
         npm run-script test-error --silent
         $Global:LASTEXITCODE | Should -Be 22
-        $Global:LASTEXITCODE = 0
+        #$Global:LASTEXITCODE = 0
     }
 
     It "should be able to be able to pass arguements along" {
