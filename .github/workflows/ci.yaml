@@ -26,6 +26,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Installing node modules for the tests (working-directory is ./tests)
         run: npm install
+      - name: Get Peser defaults
+        run: npm run get-pester-defaults
       - name: Running tests
         run: npm test
       # - name: Running tests in powershell for Windows
