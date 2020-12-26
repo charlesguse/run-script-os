@@ -33,7 +33,8 @@ generate_results_filename () {
 @test "It should be able to use the darwin alias for MacOS" {
   local expected="darwin"
 
-  if ["$NIX_OS" != "macos"]
+  if [ "$NIX_OS" != "macos" ]
+  then
     expected="not darwin"
   fi
 
