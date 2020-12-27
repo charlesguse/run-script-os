@@ -1,6 +1,6 @@
 # run-script-os tests
 
-GitHub Actions makes it trivial to test this project across the different operating systems and due to the nature of the package, it would be good to test this on the three primary OSs (Windows, Linux, Mac).
+GitHub Actions makes it trivial to test this project across the different operating systems and due to the nature of the package, it would be good to test this on the three primary OSes (Windows, Linux, Mac).
 
 ---
 
