@@ -11,6 +11,9 @@ jobs:
         working-directory: ./tests
     strategy:
       matrix:
+        include:
+          - npm-version: latest
+          - npm-version: next-7
         os:
           - macos-latest
           - ubuntu-latest
@@ -24,23 +27,15 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Starting NPM version
+      - name: Update NPM to ${{ matrix.npm-version }}
+        env:
+          NPM_VERSION: ${{ matrix.npm-version }}
+        run: npm install -g npm@$NPM_VERSION
+      - name: npm version
         run: npm --version
       - name: Installing node modules for the tests (working-directory is ./tests)
         run: npm ci
       - name: Running tests
-        run: npm test
-      - name: Update NPM to the latest version
-        run: npm install -g npm@latest
-      - name: Latest NPM version
-        run: npm --version
-      - name: Running tests at latest NPM version
-        run: npm test
-      - name: Update NPM to the latest version
-        run: npm install -g npm@next
-      - name: Latest NPM version
-        run: npm --version
-      - name: Running tests at latest NPM version
         run: npm test
   deploy:
     name: Publish to NPM
