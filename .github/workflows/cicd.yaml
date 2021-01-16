@@ -11,9 +11,9 @@ jobs:
         working-directory: ./tests
     strategy:
       matrix:
-        include:
-          - npm-version: latest
-          - npm-version: next-7
+        npm-version:
+          - latest
+          - next-7
         os:
           - macos-latest
           - ubuntu-latest

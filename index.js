@@ -8,8 +8,8 @@ const path = require("path");
 const matchScript = require ('./functions.js').matchScript;
 const expandShorthand = require('./functions.js').expandShorthand;
 
-const INCORRECT_USAGE_CODE = 1000
-const MISSING_COMMAND_CODE = 1001
+const INCORRECT_USAGE_CODE = 255
+const MISSING_COMMAND_CODE = 254
 
 
 /**
