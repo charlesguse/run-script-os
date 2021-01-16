@@ -46,7 +46,7 @@ jobs:
       - name: npm version
         run: npm --version
       - name: Installing run-script-os and other testing dependencies for the tests (working-directory is ./tests)
-        run: npm ci
+        run: npm install
       - name: Running tests (working-directory is ./tests)
         run: npm test
   deploy:
