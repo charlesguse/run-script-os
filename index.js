@@ -15,7 +15,7 @@ const MISSING_COMMAND_CODE = 254
 /**
  * This package can only be executed from within the npm script execution context
  */
-if (!process.env["npm_config_argv"]) {
+if (!process.env["npm_config_argv"] && !process.env["npm_lifecycle_event"]) {
   console.log("This is meant to be run from within npm script. See https://github.com/charlesguse/run-script-os");
   process.exit(INCORRECT_USAGE_CODE);
 }
@@ -44,11 +44,16 @@ const scripts = require(path.join(process.cwd(), "package.json")).scripts;
 /**
  * The script being executed can come from either lifecycle events or command arguments
  */
-let npmArgs = JSON.parse(process.env["npm_config_argv"]);
-let options = npmArgs.original;
-
+let options
+if (process.env["npm_config_argv"]) {
+    let npmArgs = JSON.parse(process.env["npm_config_argv"]);
+    options = npmArgs.original;
+} else {
+    options =
+        [process.env["npm_command"], process.env["npm_lifecycle_event"]];
+}
 if (!(options[0] === "run" || options[0] === "run-script")) {
-  options.unshift("run");
+    options.unshift("run");
 }
 
 /**
