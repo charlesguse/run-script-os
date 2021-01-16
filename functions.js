@@ -48,7 +48,7 @@
       /**
        * macOS specific scripts (e.g. brew)
        */
-      result = (`${script}:darwin` in scripts) ? `${script}:darwin` : false;
+      result = (`${script}:macos` in scripts) ? `${script}:macos` : false;
 
       /**
        * nix compatible scripts (cp, rm...)

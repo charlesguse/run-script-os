@@ -4,29 +4,50 @@ on: [push]
 
 jobs:
   test:
-    name: Test on different OSes and Node versions
+    name: Test ${{ matrix.os }}:${{ matrix.node-version }}/npm@${{ matrix.npm-version }}
     runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    # run-script-os doesn't have dependencies.
+    # The tests have run-script-os as a dependency
+    # Because of that, the tests folder is the working
+    # directory for tests
     defaults:
       run:
         working-directory: ./tests
     strategy:
+      # Testing npm@latest using nodejs@14 on the different operating systems.
+      # Flexible to add more test environments across the different operating systems
+      # Include an aditional test using npm@next-7
+      # Run all of the test environments to see all of the environments that have issues.
+      fail-fast: false
       matrix:
         os:
           - macos-latest
           - ubuntu-latest
           - windows-latest
-        node-version:
-          - 12
-          - 14
+        node-version: [14]
+        npm-version: [latest]
+        experimental: [false]
+        include:
+          - os: ubuntu-latest
+            node-version: 14
+            npm-version: next-7
+            experimental: true
     steps:
       - uses: actions/checkout@v2
-      - name: Testing run-script-os with Node.js ${{ matrix.node-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.
+      - name: Testing run-script-os with nodejs@${{ matrix.node-version }}/npm@${{ matrix.npm-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Installing node modules for the tests (working-directory is ./tests)
+      - name: Update NPM to ${{ matrix.npm-version }}
+        env:
+          NPM_VERSION: ${{ matrix.npm-version }}
+        run: npm install -g npm@$NPM_VERSION
+      - name: npm version
+        run: npm --version
+      - name: Installing run-script-os and other testing dependencies for the tests (working-directory is ./tests)
         run: npm ci
-      - name: Running tests
+      - name: Running tests (working-directory is ./tests)
         run: npm test
   deploy:
     name: Publish to NPM
