@@ -1,9 +1,10 @@
-name: run-script-os CI
+name: run-script-os CICD
 
 on: [push]
 
 jobs:
   test:
+    name: Test on different OSes and Node versions
     runs-on: ${{ matrix.os }}
     defaults:
       run:
@@ -26,7 +27,7 @@ jobs:
       - name: Starting NPM version
         run: npm --version
       - name: Installing node modules for the tests (working-directory is ./tests)
-        run: npm install
+        run: npm ci
       - name: Running tests
         run: npm test
       - name: Update NPM to the latest version
@@ -41,3 +42,16 @@ jobs:
         run: npm --version
       - name: Running tests at latest NPM version
         run: npm test
+  deploy:
+    name: Publish to NPM
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v2
+      - name: Testing run-script-os with Node.js ${{ matrix.node-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.
+        uses: actions/setup-node@v2
+      - name: NPM Publish
+        uses: JS-DevTools/npm-publish@v1
+        with:
+          token: ${{ secrets.NPM_TOKEN }}
