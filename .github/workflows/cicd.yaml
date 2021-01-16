@@ -17,6 +17,8 @@ jobs:
       # Testing npm@latest using nodejs@14 on the different operating systems.
       # Flexible to add more test environments across the different operating systems
       # Include an aditional test using npm@next-7
+      # Run all of the test environments to see all of the environments that have issues.
+      fail-fast: false
       matrix:
         os:
           - macos-latest
