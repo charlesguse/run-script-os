@@ -15,7 +15,7 @@ jobs:
           - ubuntu-latest
           - windows-latest
         node-version:
-          - 12
+          #- 12
           - 14
     steps:
       - uses: actions/checkout@v2
@@ -23,7 +23,21 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Starting NPM version
+        run: npm --version
       - name: Installing node modules for the tests (working-directory is ./tests)
         run: npm install
       - name: Running tests
+        run: npm test
+      - name: Update NPM to the latest version
+        run: npm install -g npm@latest
+      - name: Latest NPM version
+        run: npm --version
+      - name: Running tests at latest NPM version
+        run: npm test
+      - name: Update NPM to the latest version
+        run: npm install -g npm@next
+      - name: Latest NPM version
+        run: npm --version
+      - name: Running tests at latest NPM version
         run: npm test
