@@ -5,7 +5,7 @@
         "test": "run-script-os",
         "test:windows": "@powershell -NoProfile -Command \"Invoke-Pester -Configuration (Get-Content ./windows.configuration.json | ConvertFrom-Json) | Select-Object -ExpandProperty FailedCount | Should -BeNull\"",
         "test:linux": "./linux.test.sh",
-        "test:macos": "./macos.test.sh",
+        "test:darwin": "./macos.test.sh",
 
         "get-pester-defaults": "@powershell -NoProfile -Command \"Import-Module Pester; [PesterConfiguration]::Default\"",
 
