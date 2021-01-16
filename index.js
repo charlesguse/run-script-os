@@ -8,12 +8,16 @@ const path = require("path");
 const matchScript = require ('./functions.js').matchScript;
 const expandShorthand = require('./functions.js').expandShorthand;
 
+const INCORRECT_USAGE_CODE = 1000
+const MISSING_COMMAND_CODE = 1001
+
+
 /**
  * This package can only be executed from within the npm script execution context
  */
 if (!process.env["npm_config_argv"]) {
   console.log("This is meant to be run from within npm script. See https://github.com/charlesguse/run-script-os");
-  return;
+  process.exit(INCORRECT_USAGE_CODE);
 }
 
 /**
@@ -82,7 +86,7 @@ osCommand = matchScript(event || argument, platform, scripts);
  */
 if (!osCommand) {
   console.log(`run-script-os was unable to execute the script '${event || argument}'`);
-  process.exit(0);
+  process.exit(MISSING_COMMAND_CODE);
 }
 
 /**
