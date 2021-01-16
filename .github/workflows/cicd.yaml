@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   test:
-    name: Test on different OSes and Node versions
+    name: Test ${{ matrix.os }}:${{ matrix.node-version }}/npm@${{ matrix.npm-version }}
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
     # run-script-os doesn't have dependencies.
