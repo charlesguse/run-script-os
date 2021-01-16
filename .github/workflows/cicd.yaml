@@ -6,7 +6,6 @@ jobs:
   test:
     name: Test ${{ matrix.os }}:${{ matrix.node-version }}/npm@${{ matrix.npm-version }}
     runs-on: ${{ matrix.os }}
-    continue-on-error: ${{ matrix.experimental }}
     # run-script-os doesn't have dependencies.
     # The tests have run-script-os as a dependency
     # Because of that, the tests folder is the working
@@ -27,12 +26,10 @@ jobs:
           - windows-latest
         node-version: [14]
         npm-version: [latest]
-        experimental: [false]
         include:
           - os: ubuntu-latest
             node-version: 14
             npm-version: next-7
-            experimental: true
     steps:
       - uses: actions/checkout@v2
       - name: Testing run-script-os with nodejs@${{ matrix.node-version }}/npm@${{ matrix.npm-version }} on ${{ matrix.os }} from a tests project similar to how run-script-os is used by others.
