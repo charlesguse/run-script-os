@@ -1,6 +1,6 @@
 name: run-script-os CICD
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test:
