@@ -62,7 +62,7 @@ if (!(options[0] === "run" || options[0] === "run-script")) {
 options[1] = expandShorthand(options[1]);
 
 // Check for yarn without install command; fixes #13
-const isYarn = process.env.npm_config_user_agent.includes('yarn');
+const isYarn = (process.env.npm_config_user_agent && process.env.npm_config_user_agent.includes('yarn')) ? true : false;
 if (isYarn && !options[1]) options[1] = 'install';
 
 let osCommand = `${options[1]}:${platform}`;
