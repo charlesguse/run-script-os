@@ -32,8 +32,7 @@ const spawn = require("child_process").spawn;
 let platform = process.platform;
 if (process.env.RUN_OS_WINBASH_IS_LINUX) {
   let shell = process.env.SHELL || process.env.TERM;
-  shell = shell && shell.match("bash.exe") ? "bash.exe" : shell;
-  platform = shell && ["bash.exe", "cygwin"].includes(shell) ? "linux" : process.platform;
+  platform = shell && shell.match(/\/(?:bash|sh|zsh|dash|ksh)(?:\.exe)?$/) ? "linux" : process.platform;
 }
 
 /**
