@@ -36,6 +36,8 @@ if (process.env.RUN_OS_WINBASH_IS_LINUX) {
   platform = shell && ["bash.exe", "cygwin"].includes(shell) ? "linux" : process.platform;
 }
 
+let architecture = process.arch;
+
 /**
  * Scripts as found on the user's package.json
  */
@@ -65,8 +67,7 @@ options[1] = expandShorthand(options[1]);
 const isYarn = (process.env.npm_config_user_agent && process.env.npm_config_user_agent.includes('yarn')) ? true : false;
 if (isYarn && !options[1]) options[1] = 'install';
 
-let osCommand = `${options[1]}:${platform}`;
-let foundMatch = true;
+let osCommand = `${options[1]}:${platform}-${architecture}`;
 
 let argument = options[1];
 let event = process.env["npm_lifecycle_event"];
@@ -84,7 +85,7 @@ if (isYarn && !argument) {
    * Execute the regular expression to help identify missing scripts
    * It also tests for different aliases
  */
-osCommand = matchScript(event || argument, platform, scripts);
+osCommand = matchScript(event || argument, platform, architecture, scripts);
 
 /**
  * Test again, this time to end the process gracefully
