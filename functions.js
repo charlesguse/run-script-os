@@ -5,14 +5,16 @@
   *
   * @param {string} script   - name of the script to be matched paired to the platform or alias
   * @param {string} platform - name of the platform to be paired with the script
+  * @param {string} architecture - name of the architecture to be paired with the script
   * @param {array}  scripts  - list of available scripts defined in package.json
   */
- exports.matchScript = function matchScript(script, platform, scripts) {
+ exports.matchScript = function matchScript(script, platform, architecture, scripts) {
   /**
    * Save the result so we can determine if there was a match
    * First check for a basic match before we have to go through each script with a regex
    */
-  let result = (`${script}:${platform}` in scripts) ? `${script}:${platform}` : false;
+  let result = (`${script}:${platform}-${architecture}` in scripts) ? `${script}:${platform}-${architecture}` : false;
+  if (!result) result = (`${script}:${platform}` in scripts) ? `${script}:${platform}` : false;
   if (result) return result;
 
   /**
@@ -20,7 +22,11 @@
    * it helps when the "in" operator can't determine if there's a real match or not,
    * due to the properties changing
    */
-  let regex = new RegExp(`^(${script}):([a-zA-Z0-9-]*:)*(${platform})(:[a-zA-Z0-9-]*)*$`, "g");
+  const regexArch = new RegExp(`^(${script}):([a-zA-Z0-9-]*:)*(${platform}-${architecture})(:[a-zA-Z0-9-]*)*$`, "g");
+  for (let command in scripts) {
+    if (command.match(regexArch)) return command;
+  }
+  const regex = new RegExp(`^(${script}):([a-zA-Z0-9-]*:)*(${platform})(:[a-zA-Z0-9-]*)*$`, "g");
   for (let command in scripts) {
     if (command.match(regex)) return command;
   }
@@ -31,8 +37,24 @@
    */
   switch (platform) {
     case 'win32':
-      result = (`${script}:windows` in scripts) ? `${script}:windows` : false;
+      result = (`${script}:windows-${architecture}` in scripts) ? `${script}:windows-${architecture}` : false;
+      if (!result) result = (`${script}:windows` in scripts) ? `${script}:windows` : false;
       break;
+
+    case 'darwin':
+    case 'macos':
+      console.log('macos', platform, architecture, scripts)
+      /**
+       * architecure specific scripts (e.g. arm64)
+       */
+      result = (`${script}:macos-${architecture}` in scripts) ? `${script}:macos-${architecture}` : false;
+
+      /**
+       * macOS specific scripts (e.g. brew)
+       */
+      if (!result) result = (`${script}:macos` in scripts) ? `${script}:macos` : false;
+
+      // don't break here, fall through to *nix scripts
 
     case 'aix':
     case 'linux':
@@ -40,22 +62,11 @@
     case 'openbsd':
     case 'freebsd':
     case 'android':
-      result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
-      break;
+      result = (`${script}:nix-${architecture}` in scripts) ? `${script}:nix-${architecture}` : false;
 
-    case 'darwin':
-    case 'macos':
-      /**
-       * macOS specific scripts (e.g. brew)
-       */
-      result = (`${script}:macos` in scripts) ? `${script}:macos` : false;
-
-      /**
-       * nix compatible scripts (cp, rm...)
-       */
       if (!result) result = (`${script}:nix` in scripts) ? `${script}:nix` : false;
-
       break;
+
     default: result = false;
   }
 
